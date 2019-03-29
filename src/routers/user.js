@@ -33,7 +33,7 @@ router.post("/users", async (req, res) => {
 
     // this set up is more readable
     try {
-        //await user.save();
+        await user.save();
         // will send a new user an email
         sendWelcomeEmail(user.email, user.name);
         // note the below function will also save the user for us
