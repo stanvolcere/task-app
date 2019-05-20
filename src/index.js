@@ -1,4 +1,5 @@
 const express = require('express');
+const cors =  require('cors');
 
 // this merely makes sure that the file runs
 require("./db/mongoose");
@@ -10,6 +11,8 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+// allows any url in the world to access our 
+app.use(cors());
 app.use(userRouter);
 app.use(taskRouter);
 

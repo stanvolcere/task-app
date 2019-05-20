@@ -33,15 +33,17 @@ router.post("/users", async (req, res) => {
 
     // this set up is more readable
     try {
-        // will send a new user an email
-        sendWelcomeEmail(user.email, user.name);
         // note the below function will also save the user for us
         const token = await user.generateAuthToken();
         
         await user.save();
+        // will send a new user an email
+        sendWelcomeEmail(user.email, user.name);
+
         res.status(200).send({user, token});
     } catch (e) {
-        res.status(400).send(e);
+        console.log(e.message);
+        res.status(400).send(e.message);
     };
 
     // usage of promise chaining
