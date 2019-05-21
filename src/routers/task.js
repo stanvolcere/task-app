@@ -31,8 +31,6 @@ router.get("/tasks", auth, async (req, res) => {
     const match = {};
     const sort = {};
 
-    //console.log(req.user);
-
     if (req.query.completed) {
         match.completed = req.query.completed === 'true';
     }
@@ -55,10 +53,8 @@ router.get("/tasks", auth, async (req, res) => {
                 sort
             }
         }).execPopulate();
-        console.log("returned");
         res.status(200).send(req.user.tasks);
     } catch(e) {
-        console.log(e);
         res.status(500).send(e);
     }
 });
@@ -68,8 +64,6 @@ router.get("/tasks/:id", auth, async (req, res) => {
     const _id = req.params.id;
 
     try {
-        //const task = await Task.findById(_id);
-
         // this returnes a specifc task if it belongs to the currenlty signed in user
         const task = await Task.findOne({
             _id,
@@ -87,7 +81,6 @@ router.get("/tasks/:id", auth, async (req, res) => {
 
 //update a task  
 router.patch("/tasks/:id", auth, async (req, res) => {
-
     // this handles the error that would occur if we try to update a property that doesm't exist 
     const updates = Object.keys(req.body);
     const allowUpdates = ["description", "completed"];
