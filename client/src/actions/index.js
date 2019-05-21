@@ -16,14 +16,12 @@ export const signup = (formProps, callback) => async (dispatch) => {
     }
 }
 
-export const signout = () => {
+export const signout = (callback) => async (dispatch) => {
     localStorage.removeItem("token");
 
     // reuse of the AUTH_USER type but this time we pass an empty string as the payload
-    return {
-        type: AUTH_USER,
-        payload: ""
-    }
+    dispatch({type: AUTH_USER, payload: ""});
+    callback();
 };
 
 export const signin = (formProps, callback) => async (dispatch) => {
@@ -46,8 +44,8 @@ export const fetchTasks = (auth) => async (dispatch) => {
     const config = { headers: { 'Authorization': authToken } };
 
     const res = await axios.get("http://localhost:5000/tasks/", config);
-    //dispatch({type: FETCH_TASKS, payload: res.data });
+    dispatch({type: FETCH_TASKS, payload: res.data });
     
-    console.log(res);
+    //console.log(res);
 
 };

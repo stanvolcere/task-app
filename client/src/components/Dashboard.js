@@ -10,10 +10,24 @@ class Dashboard extends React.Component {
         this.props.fetchTasks(this.props.auth);
     }
 
+    renderList() {
+        return this.props.tasks.map((task) => {
+            return (
+                <div className="item" key={task._id}>
+                    <div className="content">
+                        {task.description}
+                        {task.completed}
+                    </div>
+                </div>
+            )
+        })
+    };
+
     render() {
         return (
             <div>
                 Welcome to Task App (this is where all the tasks will appear)
+                {this.renderList()}
             </div>
         ) 
     }
@@ -21,7 +35,8 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth.authenticated
+        auth: state.auth.authenticated,
+        tasks: Object.values(state.tasks)
     }
 }
 
